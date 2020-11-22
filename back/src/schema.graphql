@@ -1,0 +1,55 @@
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  fullname: String!
+  notes(id: String): [Notes!]
+}
+
+type Notes {
+  id: ID!
+  title: String!
+  body: String!
+  user: User!
+  category: Category
+}
+
+type Category {
+  id: ID!
+  name: String!
+  notes(id: String): [Notes!]
+}
+
+type Query {
+  notes(id: String): [Notes!]
+  category: [Category!]
+  my: User!
+}
+
+type Mutation {
+  login(data: LoginInput!): String!
+  registration(data: RegInput!): User!
+
+  createCategory(name: String!): Category!
+  addCategory(category_id: String!, notes_id: String!): Notes!
+
+  createNotes(data: NotesInput!): Notes!
+  updateNotes(notes_id: String!, data: NotesInput!): Notes!
+  deleteNotes(notes_id: String!): Boolean!
+}
+
+input NotesInput {
+  title: String!
+  body: String!
+}
+
+input RegInput {
+  fullname: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
